@@ -1,4 +1,4 @@
-# StapuBox Internship Assignment - OTP Login Flow
+# StapuBox - OTP Login Flow
 
 This is a React Native (Expo) application implementing a 3-screen OTP login flow as per the assignment requirements.
 
