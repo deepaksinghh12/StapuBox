@@ -56,12 +56,13 @@ export default function VerifyScreen() {
         setOtp(newOtp);
         setErrorHighlight(false);
 
-        // Auto-focus next input
+        // Logic: When user types a number, move to the next box automatically
+        // This was a bit tricky to get right with the refs!
         if (value && index < 3) {
             inputRefs.current[index + 1]?.focus();
         }
 
-        // Auto-submit if all filled
+        // If it's the last digit, submit automatically (Enhances UX)
         if (index === 3 && value) {
             // Wait slightly for state update then submit
             // Using the local variable 'newOtp' to check completeness

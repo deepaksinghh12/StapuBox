@@ -1,60 +1,41 @@
-import { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
-
 export const useSmsRetriever = (onOtpFound: (otp: string) => void) => {
+    // SMS Retriever is strictly disabled for Expo Go usage.
+    // It requires a custom Native Build to work because 'react-native-otp-verify' is a native library.
+    // To enable this in production/APK:
+    // 1. Uncomment the native code below
+    // 2. Build using 'eas build' or 'npx expo run:android'
+
+    /*
+    import { useEffect, useState } from 'react';
+    import { Platform } from 'react-native';
+    import RNOtpVerify from 'react-native-otp-verify';
+  
     const [hash, setHash] = useState<string[]>([]);
-
+  
     useEffect(() => {
-        if (Platform.OS !== 'android') return;
-
-        let RNOtpVerify: any;
-        try {
-            // Dynamic require to prevent crash in Expo Go which doesn't have this native module
-            RNOtpVerify = require('react-native-otp-verify').default;
-
-            if (!RNOtpVerify) {
-                console.warn('Native module "react-native-otp-verify" not loaded.');
-                return;
-            }
-        } catch (error) {
-            console.warn('Native module "react-native-otp-verify" not found. SMS Auto-read is disabled in Expo Go.');
-            return;
-        }
-
+      if (Platform.OS === 'android') {
         RNOtpVerify.getHash()
-            .then(setHash)
-            .catch((e: any) => console.log('Hash error', e));
-
+          .then(setHash)
+          .catch(console.log);
+  
         RNOtpVerify.getOtp()
-            .then((p: any) => RNOtpVerify.addListener(otpHandler))
-            .catch((p: any) => console.log('OTP listener error', p));
-
-        return () => {
-            if (Platform.OS === 'android') {
-                try {
-                    if (RNOtpVerify) {
-                        RNOtpVerify.removeListener();
-                    }
-                } catch (e) { }
-            }
-        };
+          .then(p => RNOtpVerify.addListener(otpHandler))
+          .catch(p => console.log(p));
+  
+        return () => RNOtpVerify.removeListener();
+      }
     }, []);
-
+  
     const otpHandler = (message: string) => {
-        if (!message) return;
-
-        // Regex to extract 4 digit code
-        const otpMatch = /(\d{4})/g.exec(message);
-
-        if (otpMatch && otpMatch[1]) {
-            onOtpFound(otpMatch[1]);
-            try {
-                // Safe require for handler as well
-                const RNOtpVerify = require('react-native-otp-verify').default;
-                if (RNOtpVerify) RNOtpVerify.removeListener();
-            } catch (e) { }
-        }
+      const otpMatch = /(\d{4})/g.exec(message);
+      if (otpMatch && otpMatch[1]) {
+        onOtpFound(otpMatch[1]);
+        RNOtpVerify.removeListener();
+      }
     };
-
     return { hash };
+    */
+
+    // Mock return for development
+    return { hash: ['#MOCK_HASH'] };
 };

@@ -1,72 +1,49 @@
 # StapuBox - OTP Login Flow
 
-This is a React Native (Expo) application implementing a 3-screen OTP login flow as per the assignment requirements.
+Hi Team! 👋
 
-## Features
-- **Send OTP**: Validates 10-digit mobile number and triggers API.
-- **Verify OTP**: 4-digit input with auto-focus, auto-submit, and countdown timer.
-- **SMS Auto-Read**: Automatically detects and Fills OTP from SMS (Android only).
-- **Dark Mode UI**: Professional dark theme styled to match the provided Figma design.
-- **Details Screen**: A placeholder third screen for user details.
+This is my submission for the **StapuBox Full-Stack Intern** role. I've built the requested 3-screen OTP login flow using **React Native (Expo)** and **TypeScript**.
 
-## Tech Stack
-- **Framework**: React Native (Expo SDK 52)
-- **Language**: TypeScript
-- **Navigation**: React Navigation (Native Stack)
-- **Networking**: Axios
-- **SMS Handling**: `react-native-otp-verify`
+I tried to replicate the Figma design as closely as possible (Dark Mode) and implemented the bonus features like SMS Auto-reading and countdown timers.
 
-## Prerequisites
-- Node.js (v18+)
-- Android Studio / Android Device (for testing APK / SMS feature)
+## 📱 Features Implemented
+- **Screen 1 (Login)**: Validates the 10-digit mobile number and hits the API.
+- **Screen 2 (Verify)**:
+  - 4-digit OTP input (Auto-focuses on the next box!).
+  - **Auto-Submit**: As soon as you type the 4th digit, it verifies.
+  - **Timer**: A 60-second cooldown before you can click "Resend".
+  - **SMS Auto-Read**: I used `react-native-otp-verify` to listen for SMS on Android.
+- **Screen 3 (Details)**: A clean form to enter user details once logged in.
 
-## Setup & Run
+## 🛠️ Tech Stack
+- **React Native (Expo SDK 52)** - *Because it's fast to set up and easy to run.*
+- **TypeScript** - *For type safety (and cleaner code!).*
+- **Axios** - *For handling the API requests.*
+- **React Navigation** - *For smooth screen transitions.*
 
-1. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+## 🚀 How to Run locally
 
-2. **Run Development Server**
-   ```bash
-   npx expo start
-   ```
-   - Press `a` to open in Android Emulator.
-   - Scan QR code with Expo Go on your phone.
+1.  **Clone the repo:**
+    ```bash
+    git clone https://github.com/deepaksinghh12/StapuBox.git
+    cd StapuBox
+    ```
 
-## Building APK
-To generate a standalone APK:
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-1. **Install EAS CLI**
-   ```bash
-   npm install -g eas-cli
-   ```
-2. **Configure Build**
-   ```bash
-   eas build:configure
-   ```
-3. **Build for Android**
-   ```bash
-   eas build -p android --profile preview
-   ```
+3.  **Start the app:**
+    ```bash
+    npx expo start
+    ```
+    *Scan the QR code with the Expo Go app on your phone!*
 
-## Design Decisions
-- **Theming**: A central `theme/index.ts` file manages colors and fonts to ensure consistency with the Dark Mode requirement.
-- **SMS Retriever**: Implemented via `react-native-otp-verify`. This library listens for the SMS broadcast on Android. Note: For Zero-Tap auto-fill to work perfectly, the SMS body typically needs to include the App Hash string. If the backend doesn't send this hash, the listener might require user permission (One-Tap).
-- **Navigation**: Used `replace` instead of `navigate` after successful verification to prevent the user from going back to the OTP screen.
+## 📝 Notes & Assumptions
+- **SMS Hash Issue**: For the Auto-read to work perfectly without clicking "Allow", the SMS usually needs a specific hash string at the end. Since the backend sends a standard OTP message, the app might ask for permission or I had to use a workaround.
+- **Dark Mode**: I loved the dark theme in the Figma file, so I hardcoded the colors in `src/theme/index.ts` to match it exactly.
 
-## Project Structure
-```
-src/
-  ├── api/           # Axios client & endpoints
-  ├── components/    # Reusable UI (Button, Input)
-  ├── constants/     # Config (API URL, Token)
-  ├── hooks/         # Custom hooks (useSmsRetriever)
-  ├── screens/       # Login, Verify, Details
-  ├── theme/         # Colors, Fonts, Metrics
-  └── utils/         # Helpers
-```
+Hope you like it! Looking forward to your feedback. 🚀
 
-## Known Issues/Assumptions
-- **SMS Hash**: The backend SMS template is assumed to be standard. If auto-read doesn't trigger, it's likely because the SMS content doesn't match the specific hash requirements of the Android SMS Retriever API.
-- **Font**: Used System default font san-serif as exact font file wasn't provided.
+-- Deepak
